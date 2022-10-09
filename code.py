@@ -42,10 +42,10 @@ def search():
 
         driver.quit()
         #data = []
-        my_dict =  {"no_of_videos": no_of_videos,"channel_avtar_url": channel_avtar_url, "channel_url": channel_url}
+        data =  {"no_of_videos": no_of_videos,"channel_avtar_url": channel_avtar_url, "channel_url": channel_url}
         #data.append(my_dict)
-        #return render_template('Home.html',data = data[0:(len(data))])
-        return jsonify(my_dict)
+        return render_template('Home.html',data = data)
+        #return jsonify(my_dict)
 
 
 @app.route('/home/search/top-videos',methods=['POST'])
