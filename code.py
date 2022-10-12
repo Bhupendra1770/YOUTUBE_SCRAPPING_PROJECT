@@ -94,7 +94,7 @@ def top_videos():
         #data1 = []
         result = {"video_thumbnail_urls": video_thumbnail_urls,"video_titles": video_titles , "video_links":video_links}
         #data1.append(mydict1)
-        return render_template('Home.html',data = result)
+        return render_template('Table.html',data = result)
 
 
 
