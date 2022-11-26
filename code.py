@@ -12,13 +12,14 @@ import pandas as pd
 app = Flask(__name__)
 @app.route('/',methods=['GET'])  # route to display the home page
 def greetings():
-    return render_template("home.html")
+    #data = {"aman":"rajput","bhupendra":"rajput"}
+    return render_template("Home.html")
 
-@app.route('/home/search',methods=['POST'])
+@app.route('/search',methods=['POST','GET'])
 def search():
     if request.method == 'POST':
         # on the basis of search text...search on youtube
-        search_text = request.form['search_text']
+        search_text = request.form['search_text1']
         url = "https://www.youtube.com/results?search_query="+search_text.replace(' ','+')
 
         # put that searching url into chrome driver with the help of selenium
@@ -30,9 +31,9 @@ def search():
         # get channel details
         channel_section = driver.find_element(By.ID,"content-section")
         channel_details = channel_section.text.split("\n")
-        channel_name = channel_details[0]
-        channel_subscribers = channel_details[1].split(" ")[0]
-        channel_desc = channel_details[2]
+        #channel_name = channel_details[0]
+        #channel_subscribers = channel_details[1].split(" ")[0]
+        #channel_desc = channel_details[2]
         no_of_videos = channel_details[1].split(" ")[1][12:]
 
         avtar = channel_section.find_element(By.XPATH,"//*[@id='avatar-section']/a")
@@ -41,12 +42,8 @@ def search():
         channel_avtar_url = img_section.get_attribute("src")
 
         driver.quit()
-        #data = []
         data =  {"no_of_videos": no_of_videos,"channel_avtar_url": channel_avtar_url, "channel_url": channel_url}
-        #data.append(my_dict)
-        return render_template('Home.html',data = data)
-        #return jsonify(my_dict)
-
+        return render_template("result.html",data=data)
 
 @app.route('/home/search/top-videos',methods=['POST'])
 def top_videos():
@@ -94,9 +91,11 @@ def top_videos():
         #data1 = []
         result = {"video_thumbnail_urls": video_thumbnail_urls,"video_titles": video_titles , "video_links":video_links}
         #data1.append(mydict1)
-        return render_template('Table.html',data = result)
+        return render_template('result2.html',data = result)
 
 
 
 if __name__ == "__main__":
-    app.run(port = 5002,debug=True)
+    app.run(port=5007)
+
+        
